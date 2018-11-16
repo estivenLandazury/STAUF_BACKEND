@@ -14,9 +14,15 @@ urlpatterns = [
 
     url(r'^Encargados$', views.UsuarioEncargadoList.as_view()),            
     url(r'^Encargado/(?P<pk>[0-9]+)$', views.UsuarioEncargadoDetail.as_view()),
+   
+    url(r'^Autenticade$', views.autenticacion),
+    
+    url(r'^Users$',views.UserAuthList.as_view()),
 
-    url(r'^Cuentas$', views.CuentaList.as_view()),            
-    url(r'^Cuenta/(?P<pk>[0-9]+)$', views.CuentaDetail.as_view()),
+
+
+   # url(r'^Cuentas$', views.CuentaList.as_view()),            
+    #url(r'^Cuenta/(?P<pk>[0-9]+)$', views.CuentaDetail.as_view()),
 
     url(r'^Tipodocumentos$', views.TipoDocumentoList.as_view()),            
     url(r'^TipoDocumento/(?P<pk>[0-9]+)$', views.TipoDocumentoDetail.as_view()),

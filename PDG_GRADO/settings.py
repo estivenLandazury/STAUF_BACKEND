@@ -32,9 +32,11 @@ ALLOWED_HOSTS = ['172.30.173.136','192.168.0.21','localhost', '127.0.0.1']
 #REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-   # 'DEFAULT_PERMISSION_CLASSES': [
+   #  'DEFAULT_PERMISSION_CLASSES': [
     #    'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+       # 'rest_framework.permissions.IsAuthenticated'
   #  ]
+    
 #}
 
 # Application definition

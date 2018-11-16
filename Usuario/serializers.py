@@ -1,13 +1,21 @@
 ##Clase serializabele qe pone en formato JSON cada uno de los atributos de las clases de nuestro modelo
 from rest_framework import serializers
+from django.contrib.auth.models import User
 
-from Usuario.models import Usuarios,TipoUsuario, RolUsuario,Encargado,Cuenta,TipoDocumento,Usuario_Documento,Manilla,Manilla_Usuario,AppMovil,Usuario_App,Manilla_App,Permiso,Permiso_Usuario,Alarma
+from Usuario.models import Usuarios,TipoUsuario, RolUsuario,Encargado,TipoDocumento,Usuario_Documento,Manilla,Manilla_Usuario,AppMovil,Usuario_App,Manilla_App,Permiso,Permiso_Usuario,Alarma
+
+
+
+class UserAuthSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= User
+        fieds =('id','password', 'last_login', 'is_superuser','username', 'first_name')
 
 
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model= Usuarios
-        fields =('Identificador','nombre', 'apellido','numeroDocumento','fechaNacimiento','encargado')
+        fields =('numeroDocumento','fechaNacimiento', 'user','encargado')
 
 
 class TipoUsuarioSerializer(serializers.ModelSerializer):
@@ -26,10 +34,7 @@ class UsuarioEncargadoSerializer(serializers.ModelSerializer):
         model= Encargado
         fields =('idEncargado','idUsuario','fechaIngreso')
 
-class CuentaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model= Cuenta
-        fields =('idCuenta','correo','contraseña', 'habilitada', 'usuario')
+
 
 class TipoDocumentoSerializer(serializers.ModelSerializer):
     class Meta:
