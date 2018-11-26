@@ -5,9 +5,18 @@ from .import views
 urlpatterns = [
     url(r'^usuarios$', views.UsuarioList.as_view()),
     url(r'^usuario/(?P<pk>[0-9]+)$', views.UsuarioDetail.as_view()),
+    url(r'^getUsu', views.UsuarioLista.as_view()),
+
+    
+    url(r'^prueba',views.ObtenerUsuarioCuenta.as_view()),
+
+
     
     url(r'^tipoUsuarios$', views.TipoUsuerList.as_view()),            
     url(r'^tipoUsuario/(?P<pk>[0-9]+)$', views.TipoUserDetail.as_view()),
+
+    url(r'^filterTipoUsuario$', views.FilterTipoUsuarioList.as_view()),            
+
 
     url(r'^rolUsuarios$', views.RolUsuerList.as_view()),            
     url(r'^rolUsuario/(?P<pk>[0-9]+)$', views.RolUserDetail.as_view()),
@@ -16,10 +25,13 @@ urlpatterns = [
     url(r'^Encargado/(?P<pk>[0-9]+)$', views.UsuarioEncargadoDetail.as_view()),
    
     url(r'^Autenticade$', views.autenticacion),
+    url(r'^AddUser$',views.createUser),
     
-    url(r'^Users$',views.UserAuthList.as_view()),
+    url(r'^GetUsers$',views.UserAuthList.as_view()),
+    url(r'^GetUsers/(?P<pk>[0-9]+)$',views.UserAuthDetail.as_view()),
 
 
+    #url(r'^GetUser$',views.obtenerUsuario),
 
    # url(r'^Cuentas$', views.CuentaList.as_view()),            
     #url(r'^Cuenta/(?P<pk>[0-9]+)$', views.CuentaDetail.as_view()),
@@ -52,7 +64,9 @@ urlpatterns = [
     url(r'^PermisoUsuarios$', views.PermisoUsuarioList.as_view()),            
     url(r'^PermisoUsuario/(?P<pk>[0-9]+)$', views.PermisoUsuarioDetail.as_view()),
 
-    url(r'^Alarmas$', views.AlarmaList.as_view()),            
+    url(r'^Alarmas$', views.AlarmaList.as_view()),    
+
+        
     url(r'^Alarma/(?P<pk>[0-9]+)$', views.AlarmaDetail.as_view()),
     
 

@@ -5,17 +5,17 @@ from django.contrib.auth.models import User
 from Usuario.models import Usuarios,TipoUsuario, RolUsuario,Encargado,TipoDocumento,Usuario_Documento,Manilla,Manilla_Usuario,AppMovil,Usuario_App,Manilla_App,Permiso,Permiso_Usuario,Alarma
 
 
-
+#API que representa la cuanta de usuario 
 class UserAuthSerializer(serializers.ModelSerializer):
-    class Meta:
+       class Meta:
         model= User
-        fieds =('id','password', 'last_login', 'is_superuser','username', 'first_name')
+        fields = ('id','username', 'email','password')
 
 
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model= Usuarios
-        fields =('numeroDocumento','fechaNacimiento', 'user','encargado')
+        fields =('id','nombre', 'apellido','numeroDocumento','fechaNacimiento', 'user','encargado')
 
 
 class TipoUsuarioSerializer(serializers.ModelSerializer):
@@ -44,7 +44,7 @@ class TipoDocumentoSerializer(serializers.ModelSerializer):
 class Usuario_DocumentoSerializer(serializers.ModelSerializer):
     class Meta:
         model= Usuario_Documento
-        fields =('usuario','tipoDocumento')
+        fields =('usuario','tipoDocumento', 'id')
 
 class ManillaSerializer(serializers.ModelSerializer):
     class Meta:

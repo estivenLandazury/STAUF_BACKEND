@@ -15,16 +15,17 @@ TIPO_USUARIO = {
 
 class Usuarios(models.Model):
      # blank se refiere a un tipo del formulario y null a la base de datos
-    
+    nombre = models.CharField(max_length=100, blank=True, null=False)
+    apellido = models.CharField(max_length=100, blank=True, null=False)
     numeroDocumento = models.CharField(max_length=100, blank=True, null=False)
     fechaNacimiento = models.DateField()
-    user = models.OneToOneField(User, blank=False, null=False, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, blank=False, null=True, on_delete=models.CASCADE)
     
     encargado = models.ManyToManyField(
         'self', through='Encargado', symmetrical=False)
 
     def __str__(self):
-        cadena =self.numeroDocumento
+        cadena = self.nombre+","+self.apellido+","+self.numeroDocumento
         return cadena
 
 
@@ -32,7 +33,7 @@ class TipoUsuario(models.Model):
     idTipo = models.CharField(max_length=100, primary_key=True)
     nombreRol = models.CharField(max_length=100, blank=False, null=False)
     rolUsuario = models.ManyToManyField(Usuarios, through='RolUsuario')
-
+    
     def __str__(self):
         cadena = self.nombreRol + ","
         return cadena
@@ -48,7 +49,7 @@ class RolUsuario(models.Model):
     fechaRegistro = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        cadena = self.tipoUsuario.nombreRol + ","
+        cadena = self.tipoUsuario.nombreRol
         return cadena
 
 

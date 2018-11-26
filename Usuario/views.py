@@ -8,8 +8,16 @@ from Usuario.serializers import UsuarioSerializer, TipoUsuarioSerializer, RolUsu
 from django.shortcuts import get_object_or_404
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from django.core import serializers
+from django.db.models import Q
 
 # Create your views here.
+
+
+
+
+
+
 
 
 @api_view(["POST"])
@@ -31,19 +39,96 @@ def autenticacion(request):
     return Response("Unable to log in with ", 400)
 
 
+# Crear cuenta de usuario
+@api_view(["POST"])
+def createUser(request):
+    username = request.data['username']
+    password = request.data['password']
+    email = request.data['email']
+
+    user = User.objects.create_user(username, email,password)
+    
+    
+    if user is not None:
+        user.save()
+
+        content = {
+            "user_id": user.pk,
+            "username": user.username,
+            "firstName": user.first_name,
+            "lastName": user.last_name,
+            "email": user.email
+        }
+        return Response(content, 200)
+    return Response("Unable to log in with ", 400)
+
+
+
+
+
+ 
+
+
+
 class UsuarioList(generics.ListCreateAPIView):
     queryset = Usuarios.objects.all()
     serializer_class = UsuarioSerializer
 
+class UsuarioDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = UsuarioSerializer
+    queryset = Usuarios.objects.all()
 
+
+
+
+
+    
+#Obtiene un usuario a partir de su nombre y apellido
+class UsuarioLista(generics.ListCreateAPIView):
+    serializer_class = UsuarioSerializer
+
+    def get_queryset(self, *args, **kwargs):
+            queryset = Usuarios.objects.all()
+            
+            param= self.request.GET.get("q")
+            param1= self.request.GET.get("l")
+
+            if param:
+              queryset= queryset.filter(nombre__exact=param, apellido__exact=param1)
+            
+            return queryset
+
+
+# obtiene un usuario a partir del id de la cuenta creada
+class ObtenerUsuarioCuenta(generics.ListCreateAPIView):
+    serializer_class = UsuarioSerializer
+
+    def get_queryset(self, *args, **kwargs):
+            queryset = Usuarios.objects.all()
+            param= self.request.GET.get("q")
+
+            if param:
+                queryset= queryset.filter(user__exact=param)
+            return queryset
+
+
+
+  
+
+#------------Usuarios con cuenta---------------
 class UserAuthList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserAuthSerializer
 
 
-class UsuarioDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Usuarios.objects.all()
-    serializer_class = UsuarioSerializer
+
+class UserAuthDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserAuthSerializer
+
+#---------------Usuarios con cuenta-------------
+
+    
 
 
 # Usuario encargado----------------------------
@@ -67,12 +152,22 @@ class TipoUsuerList(generics.ListCreateAPIView):
 class TipoUserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = TipoUsuario.objects.all()
     serializer_class = TipoUsuarioSerializer
+
+
+class FilterTipoUsuarioList(generics.ListCreateAPIView):
+    queryset=TipoUsuario.objects.filter(Q(nombreRol__exact='Ambulatorio')|Q(nombreRol__exact='Hospitalario')
+    |Q(nombreRol__exact='Acompañante') |Q(nombreRol__exact='Encargado'))
+    serializer_class =TipoUsuarioSerializer
+
+
+   
+            
 # ---------------------------------------------------------
 
 
 # Serilaización Rol Usuario----------------------------
 class RolUsuerList(generics.ListCreateAPIView):
-    #queryset = RolUsuario.objects.filter(tipoUsuario='2')
+    # queryset = RolUsuario.objects.filter(tipoUsuario='2')
     queryset = RolUsuario.objects.all()
     serializer_class = RolUsuarioSerializer
 
@@ -222,3 +317,9 @@ class AlarmaList(generics.ListCreateAPIView):
 class AlarmaDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Alarma.objects.all()
     serializer_class = AlarmaSerializer
+
+
+
+
+
+
