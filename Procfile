@@ -1,0 +1,1 @@
+web:gunicorn PDG_GRADO.wsgi --log-file -

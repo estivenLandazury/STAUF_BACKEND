@@ -18,7 +18,6 @@ class Usuarios(models.Model):
     nombre = models.CharField(max_length=100, blank=True, null=False)
     apellido = models.CharField(max_length=100, blank=True, null=False)
     numeroDocumento = models.CharField(max_length=100, blank=True, null=False)
-    fechaNacimiento = models.DateField()
     user = models.OneToOneField(User, blank=False, null=True, on_delete=models.CASCADE)
     
     encargado = models.ManyToManyField(
@@ -49,7 +48,7 @@ class RolUsuario(models.Model):
     fechaRegistro = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        cadena = self.tipoUsuario.nombreRol
+        cadena = self.tipoUsuario.nombreRol+ self.id
         return cadena
 
 

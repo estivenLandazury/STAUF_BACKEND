@@ -15,7 +15,7 @@ class UserAuthSerializer(serializers.ModelSerializer):
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model= Usuarios
-        fields =('id','nombre', 'apellido','numeroDocumento','fechaNacimiento', 'user','encargado')
+        fields =('id','nombre', 'apellido','numeroDocumento', 'user','encargado')
 
 
 class TipoUsuarioSerializer(serializers.ModelSerializer):
@@ -27,12 +27,12 @@ class TipoUsuarioSerializer(serializers.ModelSerializer):
 class RolUsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model= RolUsuario
-        fields =('usuario','tipoUsuario','fechaRegistro')
+        fields =('id','usuario','tipoUsuario','fechaRegistro' )
 
 class UsuarioEncargadoSerializer(serializers.ModelSerializer):
     class Meta:
         model= Encargado
-        fields =('idEncargado','idUsuario','fechaIngreso')
+        fields =('id','idEncargado','idUsuario','fechaIngreso')
 
 
 
@@ -55,24 +55,24 @@ class ManillaSerializer(serializers.ModelSerializer):
 class Manilla_UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model=Manilla_Usuario
-        fields =('usuario','manilla','fechaRegistro')
+        fields =('id','usuario','manilla','fechaRegistro')
 
 
 class AppMovilSerializer(serializers.ModelSerializer):
     class Meta:
         model=AppMovil
-        fields =('nombre','usuario_App')
+        fields =('id','nombre','usuario_App')
 
 class Usuario_AppMovilSerializer(serializers.ModelSerializer):
     class Meta:
         model=Usuario_App
-        fields =('usuario','appMovil', 'fechaRegistro')
+        fields =( 'id','usuario','appMovil', 'fechaRegistro')
 
 
 class Manilla_AppSerializer(serializers.ModelSerializer):
     class Meta:
         model=Manilla_App
-        fields =('appMovil','manilla','fechaRegistro')
+        fields =('id','appMovil','manilla','fechaRegistro')
 
 class Permiso_Serializer(serializers.ModelSerializer):
     class Meta:

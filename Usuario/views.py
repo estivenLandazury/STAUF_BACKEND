@@ -10,6 +10,9 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from django.core import serializers
 from django.db.models import Q
+from django.utils import timezone
+import datetime
+
 
 # Create your views here.
 
@@ -68,7 +71,7 @@ def createUser(request):
 
  
 
-
+#---------------Usuario--------------------------#
 
 class UsuarioList(generics.ListCreateAPIView):
     queryset = Usuarios.objects.all()
@@ -77,12 +80,21 @@ class UsuarioList(generics.ListCreateAPIView):
 class UsuarioDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UsuarioSerializer
     queryset = Usuarios.objects.all()
+    lookup_field= 'numeroDocumento'
+    lookup_url_kward="numeroDocumento"
 
-
-
-
-
+class UsuarioDetailId(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = UsuarioSerializer
+    queryset = Usuarios.objects.all()
     
+
+
+#obtiene la lista de usuarios que desempeñan un rol secundario: hospitalario, visitante, acompañante,ambulatorio y encargado
+class ObtenerUsuariosPorRolesSecundarios(generics.ListCreateAPIView):
+    queryset=Usuarios.objects.filter(Q(rolusuario__tipoUsuario__exact='4')|Q(rolusuario__tipoUsuario__exact='5')
+    |Q(rolusuario__tipoUsuario__exact='6') |Q(rolusuario__tipoUsuario__exact='7'))
+    serializer_class =UsuarioSerializer
+
 #Obtiene un usuario a partir de su nombre y apellido
 class UsuarioLista(generics.ListCreateAPIView):
     serializer_class = UsuarioSerializer
@@ -112,21 +124,37 @@ class ObtenerUsuarioCuenta(generics.ListCreateAPIView):
             return queryset
 
 
+#--------------------------Usuario----------------------------------------
+
 
   
 
-#------------Usuarios con cuenta---------------
+#------------Cuentas de usuario---------------
 class UserAuthList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserAuthSerializer
 
+class obtenerCuentaPorUserName(generics.ListCreateAPIView):
+    serializer_class = UserAuthSerializer
+
+    def get_queryset(self, *args, **kwargs):
+            queryset = User.objects.all()
+            param= self.request.GET.get("q")
+
+            if param:
+                queryset=queryset.filter(username__exact=param)
+            return queryset
 
 
+#obtiene la cuenta a partir del nombre de usuario
 class UserAuthDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserAuthSerializer
+    lookup_field= 'username'
+    lookup_url_kward="username"
+    
 
-#---------------Usuarios con cuenta-------------
+#---------------Cuentas de usuario-------------
 
     
 
@@ -140,6 +168,22 @@ class UsuarioEncargadoList(generics.ListCreateAPIView):
 class UsuarioEncargadoDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Encargado.objects.all()
     serializer_class = UsuarioEncargadoSerializer
+
+
+class FiltrarncargadoyFechaActual(generics.ListCreateAPIView):
+    serializer_class = UsuarioEncargadoSerializer
+    def get_queryset(self, *args, **kwargs):
+            queryset = Encargado.objects.all()
+            param= self.request.GET.get("q")
+            param1= self.request.GET.get("j")
+
+            if param:
+                
+                queryset= queryset.filter(idEncargado__exact=param,fechaIngreso__exact=param1)
+            return queryset
+
+
+
 # Usuario encargado----------------------------
 
 
@@ -152,6 +196,7 @@ class TipoUsuerList(generics.ListCreateAPIView):
 class TipoUserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = TipoUsuario.objects.all()
     serializer_class = TipoUsuarioSerializer
+
 
 
 class FilterTipoUsuarioList(generics.ListCreateAPIView):
@@ -171,10 +216,27 @@ class RolUsuerList(generics.ListCreateAPIView):
     queryset = RolUsuario.objects.all()
     serializer_class = RolUsuarioSerializer
 
-
+#Obtiene el rol del usuario a partir del id del usuario
 class RolUserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = RolUsuario.objects.all()
     serializer_class = RolUsuarioSerializer
+    lookup_field= 'usuario'
+    lookup_url_kward="usuario"
+
+
+
+
+#obtiene una lista de  roles a partir del id del usuario 
+class obtenerRolPorIdUsuario(generics.ListCreateAPIView):
+    serializer_class = RolUsuarioSerializer
+
+    def get_queryset(self, *args, **kwargs):
+            queryset = RolUsuario.objects.all()
+            param= self.request.GET.get("q")
+
+            if param:
+                queryset=queryset.filter(usuario__exact=param)
+            return queryset
 # Serilaización Rol Usuario----------------------------
 
 
@@ -201,22 +263,25 @@ class TipoDocumentoList(generics.ListCreateAPIView):
 class TipoDocumentoDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = TipoDocumento.objects.all()
     serializer_class = TipoDocumentoSerializer
+    
 
 # TipoDocumento------------------
 
-# UsuarioDocumento---------------------
+# ------------------UsuarioDocumento---------------------
 
 
 class UsuarioDocumentoList(generics.ListCreateAPIView):
     queryset = Usuario_Documento.objects.all()
     serializer_class = Usuario_DocumentoSerializer
 
-
+#Obtiene el usuario documento a partir del id del usuario
 class UsuarioDocumentoDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Usuario_Documento.objects.all()
     serializer_class = Usuario_DocumentoSerializer
+    lookup_field= 'usuario'
+    lookup_url_kward="usuario"
 
-# UsuarioDocumento---------------------
+# --------------------------UsuarioDocumento---------------------
 
 
 # Manilla----------------------
@@ -228,6 +293,11 @@ class ManillaList(generics.ListCreateAPIView):
 class ManillaDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Manilla.objects.all()
     serializer_class = ManillaSerializer
+    lookup_field= 'macId'
+    lookup_url_kward="macId"
+   
+    
+    
 
  # Manilla----------------------
 
@@ -242,6 +312,19 @@ class ManillaUsuarioList(generics.ListCreateAPIView):
 class ManillaUsuarioDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Manilla_Usuario.objects.all()
     serializer_class = Manilla_UsuarioSerializer
+
+#filtra la manilla por id de usuario y fecha establecida
+class FiltrarManillas(generics.ListCreateAPIView):
+    serializer_class = Manilla_UsuarioSerializer
+    def get_queryset(self, *args, **kwargs):
+            queryset = Manilla_Usuario.objects.all()
+            param= self.request.GET.get("q")
+            param1= self.request.GET.get("j")
+
+            if param:
+                queryset=queryset.filter(usuario__exact=param,fechaRegistro__exact=param1)
+            return queryset
+    
 # ManillaUsuario----------------------
 
 
@@ -250,10 +333,18 @@ class AppMovilList(generics.ListCreateAPIView):
     queryset = AppMovil.objects.all()
     serializer_class = AppMovilSerializer
 
-
+#obtiene la aplicación a partir del id
 class AppMovilDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = AppMovil.objects.all()
     serializer_class = AppMovilSerializer
+
+class AppMovilDetailName(generics.RetrieveUpdateDestroyAPIView):
+    queryset = AppMovil.objects.all()
+    serializer_class = AppMovilSerializer
+    lookup_field= 'nombre'
+    lookup_url_kward="nombre"
+
+   
 # AppMovil---------------------------
 
 
@@ -261,6 +352,31 @@ class AppMovilDetail(generics.RetrieveUpdateDestroyAPIView):
 class UsuarioAppMovilList(generics.ListCreateAPIView):
     queryset = Usuario_App.objects.all()
     serializer_class = Usuario_AppMovilSerializer
+
+#filtra Usuario_app por id del suaurio
+class filtrarUsuaripAppIdusuario(generics.ListCreateAPIView):
+    
+    serializer_class = Usuario_AppMovilSerializer
+    def get_queryset(self, *args, **kwargs):
+            queryset =Usuario_App.objects.all()
+            param= self.request.GET.get("q")
+            param1= self.request.GET.get("j")
+
+            if param:
+                queryset=queryset.filter(usuario__exact=param,fechaRegistro__exact=param1 )
+            return queryset
+
+#filtra Usuario_app por id de la aplicación
+class filtrarUsuarioAppIdApp(generics.ListCreateAPIView):
+    
+    serializer_class = Usuario_AppMovilSerializer
+    def get_queryset(self, *args, **kwargs):
+            queryset =Usuario_App.objects.all()
+            param= self.request.GET.get("q")
+            param1= self.request.GET.get("j")
+            if param:
+                queryset=queryset.filter(appMovil__exact=param,fechaRegistro__exact=param1 )
+            return queryset
 
 
 class UsuarioAppMovilDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -278,6 +394,18 @@ class ManillaAppList(generics.ListCreateAPIView):
 class ManillaAppDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Manilla_App.objects.all()
     serializer_class = Manilla_AppSerializer
+
+class FiltrarManillaAppPorIdApp(generics.ListCreateAPIView):
+    serializer_class = Manilla_AppSerializer
+    def get_queryset(self, *args, **kwargs):
+            queryset =Manilla_App.objects.all()
+            param= self.request.GET.get("q")
+            param1= self.request.GET.get("j")
+
+            if param:
+                queryset=queryset.filter(appMovil__exact=param,fechaRegistro__excat=param1 )
+            return queryset
+    
 
 
 # ManillaApp--------------------------------------
@@ -317,6 +445,29 @@ class AlarmaList(generics.ListCreateAPIView):
 class AlarmaDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Alarma.objects.all()
     serializer_class = AlarmaSerializer
+
+class AlarmasFalse(generics.ListCreateAPIView):    
+    queryset = Alarma.objects.filter(Q(solucionado=False))
+    serializer_class = AlarmaSerializer
+    
+class AlarmasTrue(generics.ListCreateAPIView):    
+    queryset = Alarma.objects.filter(Q(solucionado=True))
+    serializer_class = AlarmaSerializer
+
+
+class AlarmaPorfechayIdApp(generics.ListCreateAPIView):
+    serializer_class =  AlarmaSerializer
+    def get_queryset(self, *args, **kwargs):
+            now=datetime.datetime.now()
+            queryset =Alarma.objects.all()
+            param= self.request.GET.get("q")
+
+            if param:
+                queryset=queryset.filter(appMovil__exact=param,fechaRegistro__exact='django_timezone')
+            return queryset
+    
+
+
 
 
 
