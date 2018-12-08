@@ -36,10 +36,7 @@ urlpatterns = [
     url(r'^GetUser/(?P<username>[\w-]+)$',views.UserAuthDetail.as_view()),
 
 
-    #url(r'^GetUser$',views.obtenerUsuario),
-
-   # url(r'^Cuentas$', views.CuentaList.as_view()),            
-    #url(r'^Cuenta/(?P<pk>[0-9]+)$', views.CuentaDetail.as_view()),
+  
 
     url(r'^Tipodocumentos$', views.TipoDocumentoList.as_view()),            
     url(r'^TipoDocumento/(?P<pk>[0-9]+)$', views.TipoDocumentoDetail.as_view()),
