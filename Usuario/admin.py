@@ -1,7 +1,7 @@
 from django.contrib import admin
 from Usuario.models import Usuarios
 from Usuario.models import TipoUsuario
-from Usuario.models import User
+from django.contrib.auth.models import User
 
 
 # Register your models here.
