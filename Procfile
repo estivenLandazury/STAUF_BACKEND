@@ -1,1 +1,1 @@
-web:gunicorn PDG_GRADO.wsgi --log-file -
+web:gunicorn PDG_GRADO.wsgi

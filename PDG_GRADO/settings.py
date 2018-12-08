@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import django_heroku
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,8 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '7y4v#w6djvfx%t_s^q+wg2@g#%&)zu^0sn)7@2tlv7=hspu=qc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-#DEBUG = False
+#DEBUG = True
+DEBUG = False
 
 #'localhost', '127.0.0.1'
 ALLOWED_HOSTS = ['172.30.166.14','192.168.0.21','localhost', '127.0.0.1', '172.30.169.236']
@@ -102,7 +104,7 @@ WSGI_APPLICATION = 'PDG_GRADO.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
+#DATABASES = {
  #   'default': {
   #      'ENGINE': 'django.db.backends.sqlite3',
   #      'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
@@ -129,15 +131,30 @@ DATABASES = {
    # }
 
 
-   'default': {
-      'ENGINE':'django.db.backends.postgresql_psycopg2',
-      'NAME': 'Django_PDG',
-      'USER': 'postgres',
-      'PASSWORD':'12345678',
-      'HOST': 'localhost',
-      'PORT': '5432',
-   }
+#    'default': {
+#       'ENGINE':'django.db.backends.postgresql_psycopg2',
+#       'NAME': 'Django_PDG',
+#       'USER': 'postgres',
+#       'PASSWORD':'12345678',
+#       'HOST': 'localhost',
+#       'PORT': '5432',
+#    }
 
+
+
+
+#}
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dqoarn49fddo2',
+        'PASSWORD': '6f09a5ef99e388e4398bc840c928728f3a952e22e827637400e2c4cbbebb6453',
+        'USER': 'kytbkrfcllsxld',
+        'HOST': 'ec2-54-204-36-249.compute-1.amazonaws.com',
+        'PORT': '5432'
+    }
 }
 
 
@@ -178,3 +195,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+#Actvate django heroku
+django_heroku.settings(locals())
