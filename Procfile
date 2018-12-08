@@ -1,1 +1,1 @@
-web:gunicorn PDG_GRADO.wsgi
+web: gunicorn PDG_GRADO.wsgi
