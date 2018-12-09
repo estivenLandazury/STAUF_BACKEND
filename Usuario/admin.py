@@ -16,18 +16,6 @@ from Usuario.models import Usuario_App
 from Usuario.models import Manilla_App
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 # Aqui mostrará os modelos agregados    
 admin.site.register(Usuarios) 
 admin.site.register(TipoUsuario)

@@ -48,7 +48,7 @@ class RolUsuario(models.Model):
     fechaRegistro = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        cadena = self.tipoUsuario.nombreRol+ self.id
+        cadena = self.tipoUsuario+ self.usuario
         return cadena
 
 
@@ -175,7 +175,7 @@ class Alarma (models.Model):
     appMovil = models.ForeignKey(AppMovil, null=False, blank=False, on_delete=models.CASCADE)
     
     def __str__(self):
-        cadena = self.fechaRegistr+ ","+ self.appMovil+ ","+self.solucionado+","+self.descripcion
+        cadena = self.fechaRegistro+ ","+ self.appMovil+ ","+self.solucionado+","+self.descripcion
         return cadena
 
 
