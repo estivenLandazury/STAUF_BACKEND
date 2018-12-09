@@ -227,16 +227,10 @@ class RolUserDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 #obtiene una lista de  roles a partir del id del usuario 
-class obtenerRolPorIdUsuario(generics.ListCreateAPIView):
-    serializer_class = RolUsuarioSerializer
+class obtenerRolPorIdUsuario(generics.RetrieveUpdateDestroyAPIView):
+   queryset = RolUsuario.objects.all()
+   serializer_class = RolUsuarioSerializer
 
-    def get_queryset(self, *args, **kwargs):
-            queryset = RolUsuario.objects.all()
-            param= self.request.GET.get("q")
-
-            if param:
-                queryset=queryset.filter(usuario__exact=param)
-            return queryset
 # Serilaización Rol Usuario----------------------------
 
 
