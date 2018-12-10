@@ -360,23 +360,17 @@ class filtrarUsuaripAppIdusuario(generics.ListCreateAPIView):
     def get_queryset(self, *args, **kwargs):
             queryset =Usuario_App.objects.all()
             param= self.request.GET.get("q")
-            param1= self.request.GET.get("j")
 
             if param:
-                queryset=queryset.filter(usuario__exact=param,fechaRegistro__exact=param1 )
+                queryset=queryset.filter(usuario__exact=param)
             return queryset
 
 #filtra Usuario_app por id de la aplicación
-class filtrarUsuarioAppIdApp(generics.ListCreateAPIView):
-    
+class filtrarUsuarioAppIdApp(generics.RetrieveUpdateDestroyAPIView):
+    queryset =Usuario_App.objects.all()
     serializer_class = Usuario_AppMovilSerializer
-    def get_queryset(self, *args, **kwargs):
-            queryset =Usuario_App.objects.all()
-            param= self.request.GET.get("q")
-            param1= self.request.GET.get("j")
-            if param:
-                queryset=queryset.filter(appMovil__exact=param,fechaRegistro__exact=param1 )
-            return queryset
+    lookup_field= 'appMovil'
+    lookup_url_kward="appMovil"
 
 
 class UsuarioAppMovilDetail(generics.RetrieveUpdateDestroyAPIView):
