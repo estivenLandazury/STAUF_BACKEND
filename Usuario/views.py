@@ -169,6 +169,13 @@ class UsuarioEncargadoDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Encargado.objects.all()
     serializer_class = UsuarioEncargadoSerializer
 
+#Devuelve un Usuario encargado a travez del campo idEncargado
+class UsuarioEncargadoIdEncargado(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Encargado.objects.all()
+    serializer_class = UsuarioEncargadoSerializer
+    lookup_field= 'idEncargado'
+    lookup_url_kward="idEncargado"
+
 
 class FiltrarncargadoyFechaActual(generics.ListCreateAPIView):
     serializer_class = UsuarioEncargadoSerializer

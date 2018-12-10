@@ -25,9 +25,13 @@ urlpatterns = [
     url(r'^rolUsuarios$', views.RolUsuerList.as_view()),            
     url(r'^rolIdUsuario', views.obtenerRolPorIdUsuario.as_view()),            
     url(r'^rolUsuario/(?P<usuario>[\w-]+)$', views.RolUserDetail.as_view()),
+
+
     url(r'^Encargados$', views.UsuarioEncargadoList.as_view()),       
     url(r'^EncargadoActual', views.FiltrarncargadoyFechaActual.as_view()),            
     url(r'^Encargado/(?P<pk>[0-9]+)$', views.UsuarioEncargadoDetail.as_view()),
+    url(r'^UsuarioEncargado/(?P<idEncargado>[\w-]+)$', views.UsuarioEncargadoIdEncargado.as_view()),
+
    
     url(r'^Autenticade$', views.autenticacion),
     url(r'^AddUser$',views.createUser),
