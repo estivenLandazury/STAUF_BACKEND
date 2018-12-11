@@ -83,6 +83,13 @@ class UsuarioDetail(generics.RetrieveUpdateDestroyAPIView):
     lookup_field= 'numeroDocumento'
     lookup_url_kward="numeroDocumento"
 
+
+class UsuarioDetailCuenta(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = UsuarioSerializer
+    queryset = Usuarios.objects.all()
+    lookup_field= 'user'
+    lookup_url_kward="user"
+
 class UsuarioDetailId(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UsuarioSerializer
     queryset = Usuarios.objects.all()

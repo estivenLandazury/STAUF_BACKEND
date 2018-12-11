@@ -14,6 +14,8 @@ urlpatterns = [
 
     
     url(r'^prueba',views.ObtenerUsuarioCuenta.as_view()),
+    url(r'^UsuarioCuenta/(?P<user>[\w-]+)$',views.UsuarioDetailCuenta.as_view()),
+
 
 
     
