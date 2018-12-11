@@ -386,6 +386,13 @@ class filtrarUsuarioAppIdApp(generics.RetrieveUpdateDestroyAPIView):
     lookup_field= 'appMovil'
     lookup_url_kward="appMovil"
 
+# devuelvel el usuarioApp por el id del usuario indicado
+class filtrarUsuarioAppIdUsu(generics.RetrieveUpdateDestroyAPIView):
+    queryset =Usuario_App.objects.all()
+    serializer_class = Usuario_AppMovilSerializer
+    lookup_field= 'usuario'
+    lookup_url_kward="usuario"
+
 
 class UsuarioAppMovilDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Usuario_App.objects.all()

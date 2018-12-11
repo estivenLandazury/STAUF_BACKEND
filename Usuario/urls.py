@@ -64,7 +64,9 @@ urlpatterns = [
 
     url(r'^UsuarioApps$', views.UsuarioAppMovilList.as_view()),  
     url(r'^UsuarioAppUsu', views.filtrarUsuaripAppIdusuario.as_view()), 
-    url(r'^UsuarioAppApp/(?P<appMovil>[\w-]+)$', views.filtrarUsuarioAppIdApp.as_view()),             
+    url(r'^UsuarioAppApp/(?P<appMovil>[\w-]+)$', views.filtrarUsuarioAppIdApp.as_view()),
+    url(r'^UsuarioIdApp/(?P<usuario>[\w-]+)$', views.filtrarUsuarioAppIdUsu.as_view()),             
+             
     url(r'^UsuarioApp/(?P<pk>[0-9]+)$', views.UsuarioAppMovilDetail.as_view()),
 
     url(r'^ManillaApps$', views.ManillaAppList.as_view()), 
