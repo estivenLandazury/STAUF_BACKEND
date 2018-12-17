@@ -416,6 +416,12 @@ class ManillaAppDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Manilla_App.objects.all()
     serializer_class = Manilla_AppSerializer
 
+class ManillaAppDetailIdApp(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Manilla_App.objects.all()
+    serializer_class = Manilla_AppSerializer
+    lookup_field= 'appMovil'
+    lookup_url_kward="appMovil"
+
 
 
 
