@@ -327,6 +327,12 @@ class ManillaUsuarioDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Manilla_Usuario.objects.all()
     serializer_class = Manilla_UsuarioSerializer
 
+class ManillaUsuarioDetailIdUs(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Manilla_Usuario.objects.all()
+    serializer_class = Manilla_UsuarioSerializer
+    lookup_field= 'usuario'
+    lookup_url_kward="usuario"
+
 #filtra la manilla por id de usuario y fecha establecida
 class FiltrarManillas(generics.ListCreateAPIView):
     serializer_class = Manilla_UsuarioSerializer
@@ -411,11 +417,7 @@ class ManillaAppDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = Manilla_AppSerializer
 
 
-class ManillaAppDetailIdUs(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Manilla_App.objects.all()
-    serializer_class = Manilla_AppSerializer
-    lookup_field= 'usuario'
-    lookup_url_kward="usuario"
+
 
 
 
