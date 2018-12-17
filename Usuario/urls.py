@@ -74,7 +74,7 @@ urlpatterns = [
     url(r'^ManillaApps$', views.ManillaAppList.as_view()), 
     url(r'^ManillaAppIdAp',  views.FiltrarManillaAppPorIdApp.as_view()),                   
     url(r'^ManillaApp/(?P<pk>[0-9]+)$', views.ManillaAppDetail.as_view()),
-    url(r'^ManillaAppIdApp/(?P<appMovil>[\w-]+)$', views.ManillaAppDetailIdApp.as_view()),
+    url(r'^ManillaIdApp/(?P<appMovil>[\w-]+)$', views.ManillaAppDetailIdApp.as_view()),
 
 
     url(r'^Permisos$', views.PermisoList.as_view()),            
