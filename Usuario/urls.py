@@ -55,6 +55,8 @@ urlpatterns = [
     url(r'^ManillaUsuarios$', views.ManillaUsuarioList.as_view()), 
     url(r'^ManillaUsuariosFiltro', views.FiltrarManillas.as_view()),                 
     url(r'^ManillaUsuario/(?P<pk>[0-9]+)$', views.ManillaUsuarioDetail.as_view()),
+    url(r'^ManillaUsuarioIdUs/(?P<usuario>[\w]+)$', views.ManillaAppDetailIdUs.as_view()),
+
 
 
     url(r'^Apps$', views.AppMovilList.as_view()),            

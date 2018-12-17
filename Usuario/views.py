@@ -410,6 +410,18 @@ class ManillaAppDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Manilla_App.objects.all()
     serializer_class = Manilla_AppSerializer
 
+
+class ManillaAppDetailIdUs(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Manilla_App.objects.all()
+    serializer_class = Manilla_AppSerializer
+    lookup_field= 'usuario'
+    lookup_url_kward="usuario"
+
+
+
+
+
+
 class FiltrarManillaAppPorIdApp(generics.ListCreateAPIView):
     serializer_class = Manilla_AppSerializer
     def get_queryset(self, *args, **kwargs):
