@@ -1,6 +1,6 @@
 gunicorn
 django-heroku
-certifi==2018.10.15
+certifi==2022.12.7
 chardet==3.0.4
 cymysql==0.9.12
 defusedxml==0.5.0
